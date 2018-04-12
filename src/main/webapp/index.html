@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script type="application/javascript">
+
+        function enviar() {
+
+            var dsLogin = $("#dsLogin").val(), dsPassword = $("#dsPassword").val();
+
+            var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": "http://localhost:8080/api/v1/usuario/login",
+                "method": "POST",
+                "headers": {
+                    "content-type": "application/json",
+                    "cache-control": "no-cache",
+                    "postman-token": "683d0ee6-f199-42b1-015f-0f05cabf222e"
+                },
+                "processData": false,
+                "data": "{\n\t\"dsLogin\" : \"" + dsLogin + "\",\n\t\"dsPassword\" : \"" + dsPassword + "\"\n}"
+            };
+
+            $.ajax(settings).done(function (response) {
+                alert(response);
+            });
+        }
+
+    </script>
+</head>
+<body>
+
+<form action="/api/v1/usuario/usuario/login" method="post">
+
+    <label>Login:</label>
+    <input type="text" id="dsLogin"><br>
+    <label>Senha:</label>
+    <input type="password" id="dsPassword"><br>
+    <input type="button" onclick="enviar()" value="Enviar">
+
+</form>
+
+</body>
+</html>
