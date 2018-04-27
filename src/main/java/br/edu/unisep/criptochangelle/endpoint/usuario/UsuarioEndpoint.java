@@ -32,17 +32,21 @@ public class UsuarioEndpoint {
     private UsuarioDAO dao;
 
     @PostMapping("/login")
-    public String login(@RequestBody Usuario usuario) {
+    public Usuario login(@RequestBody Usuario usuario) {
 
         Usuario u = dao.findByDsLogin(usuario.getDsLogin());
         if(u != null) {
             String descriptografa = CriptoUtils.descriptografa(u.getDsPassword());
 
             if(descriptografa.equals(usuario.getDsPassword())) {
-                return "sucesso";
+
+                u.setDsLogin(CriptoUtils.criptografa(usuario.getDsLogin()));
+                u.setDsPassword(CriptoUtils.criptografa(usuario.getDsPassword()));
+
+                return u;
             }
         }
-        return "Falha";
+        return null;
     }
 
     @GetMapping

@@ -53,5 +53,4 @@ public class CriptoUtils {
         }
         return new StringBuffer(descriptografada).reverse().toString();
     }
-
 }

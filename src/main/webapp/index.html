@@ -11,6 +11,27 @@
 
     <script type="application/javascript">
 
+        function cadastrar() {
+
+            var dsLogin = $("#newDsLogin").val(), dsPassword = $("#newDsPassword").val();
+
+            var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": "http://localhost:8080/api/v1/usuario",
+                "method": "POST",
+                "headers": {
+                    "content-type": "application/json",
+                    "cache-control": "no-cache",
+                    "postman-token": "683d0ee6-f199-42b1-015f-0f05cabf222e"
+                },
+                "processData": false,
+                "data": "{\n\t\"dsLogin\" : \"" + dsLogin + "\",\n\t\"dsPassword\" : \"" + dsPassword + "\"\n}"
+            };
+
+            $.ajax(settings).done();
+        }
+
         function enviar() {
 
             var dsLogin = $("#dsLogin").val(), dsPassword = $("#dsPassword").val();
@@ -30,7 +51,10 @@
             };
 
             $.ajax(settings).done(function (response) {
-                alert(response);
+                var divLogin = document.getElementById("login");
+                var divSenha = document.getElementById("senha");
+                divLogin.innerText = "Login criptografado: " + response.dsLogin;
+                divSenha.innerText = "Senha criptografado: " + response.dsPassword;
             });
         }
 
@@ -40,7 +64,32 @@
 
 <div class="container">
     <div class="row">
+        <div class="col col-lg-2">
+        </div>
         <div class="col col-lg-4">
+            <h2>Cadastro</h2>
+        </div>
+        <div class="col col-lg-4">
+            <h2>Login</h2>
+        </div>
+        <div class="col col-lg-2">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-lg-2">
+        </div>
+        <div class="col col-lg-4">
+            <form>
+                <div class="form-group">
+                    <label for="dsLogin">Login</label>
+                    <input type="text" class="form-control" id="newDsLogin" placeholder="Login">
+                </div>
+                <div class="form-group">
+                    <label for="dsPassword">Senha</label>
+                    <input type="password" class="form-control" id="newDsPassword" placeholder="Senha">
+                </div>
+                <button type="button" class="btn btn-primary" onclick="cadastrar()">Cadastrar</button>
+            </form>
         </div>
         <div class="col col-lg-4">
             <form>
@@ -55,12 +104,15 @@
                 <button type="button" class="btn btn-primary" onclick="enviar()">Submit</button>
             </form>
         </div>
-        <div class="col col-lg-4">
+        <div class="col col-lg-2">
         </div>
 
     </div>
-</div>
 
+    <div id="login"></div>
+    <br><br>
+    <div id="senha"></div>
+</div>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
